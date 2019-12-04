@@ -7,7 +7,7 @@ const createProject = (knex, project) => {
   }, 'id')
   .then(projectId => {
     let palettesPromises =[];
-    palettesData.filter(palette => palette.projects_id === projectId[0])
+    palettesData.filter(palette => palette.projects_id === project.project_id)
     .forEach(palette => {
       palettesPromises.push(
         createPalette(knex, {
