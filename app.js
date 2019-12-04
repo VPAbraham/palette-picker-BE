@@ -4,7 +4,7 @@ import cors from 'cors';
 const app = express();
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
-const database = require('knex')(configuraton);
+const database = require('knex')(configuration);
 
 app.locals.title = 'palette picker';
 app.use(cors());
@@ -25,3 +25,5 @@ app.get('/', (request, response) => {
 //PATCH
 
 //DELETE
+
+export default app;
