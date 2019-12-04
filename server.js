@@ -1,27 +1,7 @@
-import express from 'express';
-import cors from 'cors';
+import app from './app';
 
-const app = express();
-const environment = process.env.NODE_ENV || 'development';
-const configuration = require('./knexfile')[environment];
-const database = require('knex')(configuraton);
+app.set('port', process.env.PORT || 3000);
 
-app.locals.title = 'palette picker';
-app.use(cors());
-app.use(express.json());
-
-//Endpoints
-
-app.get('/', (request, response) => {
-  response.send('Welcome to the Palette Picker 🍭')
+app.listen(app.get('port'), () =>  {
+  console.log(`${app.locals.title} is running on localhost:${app.get('port')}`);
 })
-
-//GET ALL
-
-//GET specific
-
-//POST
-
-//PATCH
-
-//DELETE
