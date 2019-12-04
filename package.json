@@ -12,9 +12,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jest": "^24.9.0",
     "knex": "^0.20.3",
     "nodemon": "^2.0.1",
-    "pg": "^7.14.0"
+    "pg": "^7.14.0",
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
