@@ -24,8 +24,23 @@ app.get('/api/v1/projects', async (request, response) => {
   } catch (error) {
     response.status(500).json({ error });
   }
-})
+});
+
 //GET specific
+app.get('/api/v1/projects/:id', async (request, response) => {
+  const { id } = request.params;
+  console.log('hey')
+
+  try {
+    const project = await database('projects').where('id', id).select();
+    if (project.length) {
+      return response.status(200).json(project)
+    }
+    response.status(404).json({ error: '404: Specified project does not exist'});
+  } catch {
+    response.status(500).json({ error: '500: Internal Server Error'})
+  }
+})
  
 //POST
 
