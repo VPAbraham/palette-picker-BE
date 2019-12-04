@@ -21,6 +21,11 @@ describe('Server', () => {
     it('should return all palettes', async () => {
       const expectedPalettes = await database('palettes').select();
 
+      const response = await request(app).get('api/v1/palettes');
+      const palettes = response.body;
+
+      expect(response.status).toBe(200);
+      expect(palettes).toEqual(expectedPalettes);
     })
   })
 
