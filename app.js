@@ -29,8 +29,6 @@ app.get('/api/v1/projects', async (request, response) => {
 //GET specific
 app.get('/api/v1/projects/:id', async (request, response) => {
   const { id } = request.params;
-  console.log('hey')
-
   try {
     const project = await database('projects').where('id', id).select();
     if (project.length) {
