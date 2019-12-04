@@ -17,9 +17,16 @@ app.get('/', (request, response) => {
 })
 
 //GET ALL
-
+app.get('/api/v1/projects', async (request, response) => {
+  try {
+    const allProjects = await database('projects').select();
+    response.status(200).json(allProjects);
+  } catch (error) {
+    response.status(500).json({ error });
+  }
+})
 //GET specific
-
+ 
 //POST
 
 //PATCH
