@@ -1,8 +1,16 @@
+<<<<<<< HEAD
+## Retrieve all project data
+A successful response returns an array of project objects. 
+
+
+`GET` /api/v1/projects/:id
+=======
 ## Retrieve All Project Data
 A successful response returns an array of project objects.
 
 
 GET /api/v1/projects
+>>>>>>> master
 
 ### Parameters
 
@@ -40,6 +48,9 @@ Example:
 ]
 ```
 
+<<<<<<< HEAD
+## Retrieve project by ID
+=======
 GET /api/v1/palettes
 
 ### Parameters
@@ -103,10 +114,11 @@ Example:
 ```
 
 ## Retrieve Specific Project Data
+>>>>>>> master
 A successful response returns the specified project object, by ID.
 
 
-GET /api/v1/projects/:id
+`GET` /api/v1/projects/:id
 
 ### Parameters
 
@@ -132,11 +144,47 @@ Example:
 ]
 ```
 
+<<<<<<< HEAD
+### Add a new project
+A successful response returns the id of the new project.
+
+`POST` /api/v1/projects
+=======
 GET /api/v1/palettes/:id
+>>>>>>> master
 
 ### Parameters
 
 | Name | Type | Description |
+<<<<<<< HEAD
+|id|integer| Unique project ID|
+|name|string|Project name|
+
+### Response
+
+Example: 
+```js
+10
+```
+
+### Delete and existing project
+A successful response returns the id of the new project.
+
+`DELETE` /api/v1/projects/:id
+
+### Parameters
+
+| Name | Type | Description |
+|id|integer| Unique project ID|
+|name|string|Project name|
+
+### Response
+
+Example: 
+```js
+5
+```
+=======
 |------|------|-------------|
 |id|integer| Unique project ID|
 |name|string|Project name|
@@ -169,3 +217,4 @@ Example:
   }
 ]
 ```
+>>>>>>> master
