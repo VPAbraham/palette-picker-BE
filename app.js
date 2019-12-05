@@ -89,11 +89,25 @@ app.post('/api/v1/palettes', async (request, response) => {
     const palette = await database('palettes').insert(newPalette, 'id')
     response.status(201).json(palette);
   } catch {
-    response.status(500).json({error: '500: Internal Server Error'})
+    response.status(500).json(error)
   }
 });
 
 //PATCH
+app.patch('/api/v1/palettes/:id', async (request, response) => {
+  const { id } = request.params;
+  const newPatch = request.body;
+  const palette = await database('palettes').where({id});
+  if (!palette.length) {
+    return response.status(422).send({error: `Palette with ${id} does not exist.`})
+  }
+  try {
+    const palette = await database('palettes').where({id}).update(newPatch);
+    response.status(200).json(`Patch with id of ${id} was successful.`);
+  } catch {
+    response.status(500).json(error)
+  }
+});
 
 //DELETE
 app.delete('/api/v1/projects/:id', async (request, response) => {
