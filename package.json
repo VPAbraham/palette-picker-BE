@@ -2,9 +2,9 @@
   "name": "palette-picker-be",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watchAll",
     "start": "nodemon --exec babel-node server.js"
   },
   "keywords": [],
@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
+    "babel-jest": "^24.9.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jest": "^24.9.0",
