@@ -1,8 +1,8 @@
-## Retrieve All Project Data
+## Retrieve all project data
 A successful response returns an array of project objects. 
 
 
-GET /api/v1/projects/:id
+`GET` /api/v1/projects/:id
 
 ### Parameters
 
@@ -40,11 +40,11 @@ Example:
 ]
 ```
 
-## Retrieve Specific Project Data
+## Retrieve project by ID
 A successful response returns the specified project object, by ID.
 
 
-GET /api/v1/projects/:id
+`GET` /api/v1/projects/:id
 
 ### Parameters
 
@@ -54,10 +54,6 @@ GET /api/v1/projects/:id
 |name|string|Project name|
 |created_at|string|Project creation date/time|
 |update_at|string|Project's last updated date/time|
-
-
-
-
 
 
 ### Response
@@ -72,4 +68,40 @@ Example:
     "updated_at": "2019-12-03T22:17:16.388Z"
   }
 ]
+```
+
+### Add a new project
+A successful response returns the id of the new project.
+
+`POST` /api/v1/projects
+
+### Parameters
+
+| Name | Type | Description |
+|id|integer| Unique project ID|
+|name|string|Project name|
+
+### Response
+
+Example: 
+```js
+10
+```
+
+### Delete and existing project
+A successful response returns the id of the new project.
+
+`DELETE` /api/v1/projects/:id
+
+### Parameters
+
+| Name | Type | Description |
+|id|integer| Unique project ID|
+|name|string|Project name|
+
+### Response
+
+Example: 
+```js
+5
 ```
