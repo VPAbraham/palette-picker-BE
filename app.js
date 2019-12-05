@@ -85,5 +85,17 @@ app.post('/api/v1/palettes', (request, response) => {
 //PATCH
 
 //DELETE
+app.delete('/api/v1/palettes/:id', async (request, response) => {
+  const { id } = request.params;
+  try {
+    const palette = await database('palettes').where('id', id).select();
+    if (!palette.length) {
+      return response.status(200).json({ id: palette[0] })
+    }
+    response.status(404).json({ error: 'Palette was not deleted.'})
+  } catch {
+    response.status(500).json({ error: '500: Internal Server Error' })
+  }
+})
 
 export default app;
