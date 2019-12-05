@@ -54,6 +54,17 @@ describe('Server', () => {
       expect(response.status).toBe(200);
       expect(result.length).toEqual(expectedProject.length);
     });
+
+    it('should return a 404 and the message "404: Specified project does not exist"', async () => {
+      // const expectedProject = await database('projects').first();
+      // const { id } = expectedProject;
+      const invalidId = -1;
+      const response = await request(app).get(`/api/v1/projects/${invalidId}`);
+
+      expect(response.status).toBe(404);
+      expect(response.body.error).toBe('404: Specified project does not exist');
+    })
+
   });
 
   describe('GET /api/v1/palettes/:id', () => {
