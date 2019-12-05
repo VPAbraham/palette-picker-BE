@@ -1,16 +1,13 @@
 <<<<<<< HEAD
 ## Retrieve all project data
-A successful response returns an array of project objects. 
-
+A successful response returns an array of project objects.
 
 `GET` /api/v1/projects/:id
-=======
+
 ## Retrieve All Project Data
 A successful response returns an array of project objects.
 
-
 GET /api/v1/projects
->>>>>>> master
 
 ### Parameters
 
@@ -20,7 +17,6 @@ GET /api/v1/projects
 |name|string|Project name|
 |created_at|string|Project creation date/time|
 |update_at|string|Project's last updated date/time|
-
 
 ### Response
 
@@ -48,9 +44,8 @@ Example:
 ]
 ```
 
-<<<<<<< HEAD
 ## Retrieve project by ID
-=======
+
 GET /api/v1/palettes
 
 ### Parameters
@@ -67,7 +62,6 @@ GET /api/v1/palettes
 |color5|string|Hex Value - #000000|
 |created_at|string|Project creation date/time|
 |update_at|string|Project's last updated date/time|
-
 
 ### Response
 
@@ -114,9 +108,8 @@ Example:
 ```
 
 ## Retrieve Specific Project Data
->>>>>>> master
-A successful response returns the specified project object, by ID.
 
+A successful response returns the specified project object, by ID.
 
 `GET` /api/v1/projects/:id
 
@@ -144,25 +137,23 @@ Example:
 ]
 ```
 
-<<<<<<< HEAD
 ### Add a new project
 A successful response returns the id of the new project.
 
 `POST` /api/v1/projects
-=======
+
 GET /api/v1/palettes/:id
->>>>>>> master
 
 ### Parameters
 
 | Name | Type | Description |
-<<<<<<< HEAD
+
 |id|integer| Unique project ID|
 |name|string|Project name|
 
 ### Response
 
-Example: 
+Example:
 ```js
 10
 ```
@@ -180,11 +171,11 @@ A successful response returns the id of the new project.
 
 ### Response
 
-Example: 
+Example:
 ```js
 5
 ```
-=======
+
 |------|------|-------------|
 |id|integer| Unique project ID|
 |name|string|Project name|
@@ -217,4 +208,3 @@ Example:
   }
 ]
 ```
->>>>>>> master
