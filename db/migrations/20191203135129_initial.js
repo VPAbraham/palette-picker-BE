@@ -13,7 +13,7 @@ exports.up = function(knex) {
       table.string('name');
       table.integer('projects_id').unsigned()
       table.foreign('projects_id')
-        .references('projects.id');
+        .references('projects.id').onDelete("CASCADE");
       table.string('color1');
       table.string('color2');
       table.string('color3');
