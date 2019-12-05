@@ -80,12 +80,25 @@ describe('Server', () => {
 
   //! POST endpoints
 
+  describe('POST /api/v1/projects', () => {
+    it('should return a 201 and add a new project to the database', async () => {
+      const newProject = { name: 'Fuzzy Things'}
+
+      const response = await request(app).post('/api/v1/projects').send(newProject);
+      const projects = await database('projects').where('id', response.body[0]);
+      const project = projects[0];
+
+      expect(response.status).toBe(201);
+      expect(project.name).toBe('Fuzzy Things')
+    })
+  })
+
   describe('POST /api/v1/palettes', () => {
     it('should return a 201 and add a new palette to the database', async () => {
       const newPalette = { name: "Unicorn", color1: "#FFFFFF", color2: "#FFFFFF", color3: "#FFFFFF", color4: "#FFFFFF", color5: "#FFFFFF" }
 
       const response = await request(app).post('/api/v1/palettes').send(newPalette);
-      const palettes = await database('palettes').where('id', response.body.id).select();
+      const palettes = await database('palettes').where('id', response.body[0]);
       const palette = palettes[0];
 
       expect(response.status).toBe(201);

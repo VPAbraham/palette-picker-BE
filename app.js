@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.get('/', (request, response) => {
   response.send('Welcome to the Palette Picker 🍭')
-})
+});
 
 //GET ALL
 app.get('/api/v1/projects', async (request, response) => {
@@ -47,7 +47,7 @@ app.get('/api/v1/projects/:id', async (request, response) => {
   } catch {
     response.status(500).json({ error: '500: Internal Server Error'})
   }
-})
+});
 
 app.get('/api/v1/palettes/:id', async (request, response) => {
   const { id } = request.params;
@@ -60,12 +60,12 @@ app.get('/api/v1/palettes/:id', async (request, response) => {
   } catch {
     response.status(500).json({ error: '500: Internal Server Error'})
   }
-})
+});
 
 //POST
 app.post('/api/v1/projects', async (request, response) => {
   const newProject = request.body;
-  for(let requiredParameter of ['name']) {
+  for (let requiredParameter of ['name']) {
     if(!newProject[requiredParameter]) {
       return response.status(422).send({error: `Unexpected format, missing ${requiredParameter}`})
     }
@@ -78,34 +78,22 @@ app.post('/api/v1/projects', async (request, response) => {
   }
 });
 
-app.post('/api/v1/palettes', (request, response) => {
-  const palette = request.body;
-
+app.post('/api/v1/palettes', async (request, response) => {
+  const newPalette = request.body;
   for (let requiredParameter of ['name', 'color1', 'color2', 'color3', 'color4', 'color5']) {
-    if (!palette[requiredParameter]) {
-      return response.status(422).send({
-        error: `Expected format: { name: <String>, color1: <String>, color2: <String>, color3: <String>, color4: <String>, color5: <String> }. You're missing a "${requiredParameter}" property.`
-      })
+    if (!newPalette[requiredParameter]) {
+      return response.status(422).send({error: `Unexpected format, missing ${requiredParameter}`})
     }
   }
-  database('palettes').insert(palette, 'id')
-    .then(palette => {
-      response.status(201).json({ id: palette[0] })
-    })
-    .catch(error => {
-      response.status(500).json({ error })
-    })
-})
+  try {
+    const palette = await database('palettes').insert(newPalette, 'id')
+    response.status(201).json(palette);
+  } catch {
+    response.status(500).json({error: '500: Internal Server Error'})
+  }
+});
 
 //PATCH
-
-// app.post('/api/v1/projects/:id', async (request, response) => {
-//   const { id, name } = request.params;
-//   try {
-//     const project = await database('projects').where({id}).select();
-
-//   }
-// })
 
 //DELETE
 app.delete('/api/v1/projects/:id', async (request, response) => {
