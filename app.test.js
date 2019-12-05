@@ -56,11 +56,11 @@ describe('Server', () => {
       const newPalette = { name: "Unicorn", color1: "#FFFFFF", color2: "#FFFFFF", color3: "#FFFFFF", color4: "#FFFFFF", color5: "#FFFFFF" }
 
       const response = await request(app).post('/api/v1/palettes').send(newPalette);
-      const palettes = await database('palettes').where('id', response.body.id).select();
+      const palettes = await database('palettes').where('id', response.body[0]);
       const palette = palettes[0];
 
       expect(response.status).toBe(201);
-      expect(palette.name).toBe(palette.name)
+      expect(palette.name).toBe(newPalette.name)
     })
   })
 
