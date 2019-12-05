@@ -99,13 +99,13 @@ app.post('/api/v1/palettes', (request, response) => {
 
 //PATCH
 
-app.post('/api/v1/projects/:id', async (request, response) => {
-  const { id, name } = request.params;
-  try {
-    const project = await database('projects').where({id}).select();
-
-  }
-})
+// app.post('/api/v1/projects/:id', async (request, response) => {
+//   const { id, name } = request.params;
+//   try {
+//     const project = await database('projects').where({id}).select();
+//
+//   }
+// })
 
 //DELETE
 app.delete('/api/v1/projects/:id', async (request, response) => {
@@ -133,5 +133,6 @@ app.delete('/api/v1/palettes/:id', async (request, response) => {
   } catch(error) {
     response.status(500).json(error)
   }
+})
 
 export default app;
