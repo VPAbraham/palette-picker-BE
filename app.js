@@ -41,9 +41,38 @@ app.get('/api/v1/projects/:id', async (request, response) => {
 })
  
 //POST
+// app.post('/api/v1/projects', async (request, response) => {
+//   const newProject = request.body;
+//   console.log(newProject)
+//   for(let requiredParameter of ['name']) {
+//     if(!newProject[requiredParameter]) {
+//       return response.status(422).send({error: `Unexpected format, missing ${requiredParameter}`})
+//     }
+//   }
+//   try {
+//     const project = await database('projects').insert(newProject, 'id')
+//     response.status(201).json(project);
+//   } catch {
+//     response.status(500).json({error: '500: Internal Server Error'})
+//   }
+// });
 
 //PATCH
 
 //DELETE
+app.delete('/api/v1/projects/:id', async (request, response) => {
+  const { id } = request.params;
+  try {
+    const project = await  database('projects').where({id}).del();
+    console.log(project)
+    // if (project !== 0) {
+    
+    //   return response.status(200).json(`Project with if of ${id} successfully deleted.`)
+    // }
+    response.status(404).json(`Project with id of ${id} not found.`)
+  } catch(error) {
+    response.status(500).json(error)
+  }
+})
 
 export default app;
