@@ -26,6 +26,15 @@ app.get('/api/v1/projects', async (request, response) => {
   }
 });
 
+app.get('/api/v1/palettes', async (request, response) => {
+  try {
+    const allPalettes = await database('palettes').select();
+    response.status(200).json(allPalettes);
+  } catch (error) {
+    response.status(500).json({ error });
+  }
+});
+
 //GET specific
 app.get('/api/v1/projects/:id', async (request, response) => {
   const { id } = request.params;
@@ -39,7 +48,20 @@ app.get('/api/v1/projects/:id', async (request, response) => {
     response.status(500).json({ error: '500: Internal Server Error'})
   }
 })
- 
+
+app.get('/api/v1/palettes/:id', async (request, response) => {
+  const { id } = request.params;
+  try {
+    const palette = await database('palettes').where('id', id).select();
+    if (palette.length) {
+      return response.status(200).json(palette)
+    }
+    response.status(404).json({ error: '404: Specified palette does not exist'});
+  } catch {
+    response.status(500).json({ error: '500: Internal Server Error'})
+  }
+})
+
 //POST
 
 //PATCH
