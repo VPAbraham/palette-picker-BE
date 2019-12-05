@@ -50,7 +50,6 @@ describe('Server', () => {
       expect(response.body.error).toEqual('404: Specified palette does not exist');
     });
   })
-  // add in test for if palette does NOT exist
 
   describe('POST /api/v1/palettes', () => {
     it('should return a 201 and add a new palette to the database', async () => {
@@ -58,11 +57,24 @@ describe('Server', () => {
 
       const response = await request(app).post('/api/v1/palettes').send(newPalette);
       const palettes = await database('palettes').where('id', response.body.id).select();
-      console.log(response.body.id)
       const palette = palettes[0];
 
       expect(response.status).toBe(201);
       expect(palette.name).toBe(palette.name)
+    })
+  })
+
+  describe('DELETE /api/v1/palettes/:id', () => {
+    it('should return a 200 and remove an existing palette from the database', async () => {
+      const expectedPalettes = await database('palettes').select();
+      const expectedPalette = await database('palettes').first();
+      const { id } = expectedPalette;
+
+      const response = await request(app).delete(`api/v1/palettes/${id}`)
+      const result = response.body[0]
+
+      expect(response.status).toBe(200);
+      expect(expectedPalettes.length).toEqual(expectedPalettes.length - 1);
     })
   })
 
