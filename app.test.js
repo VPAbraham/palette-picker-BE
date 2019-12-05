@@ -40,6 +40,15 @@ describe('Server', () => {
       expect(response.status).toBe(200);
       expect(result.length).toEqual(expectedPalette.length);
     })
+
+    it('should return a 404 and the message "404: Specified palette does not exist"', async () => {
+      const invalidID = -1;
+
+      const response = await request(app).get(`/api/v1/palettes/${invalidID}`)
+
+      expect(response.status).toBe(404);
+      expect(response.body.error).toEqual('404: Specified palette does not exist');
+    });
   })
   // add in test for if palette does NOT exist
 
