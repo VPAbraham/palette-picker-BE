@@ -41,5 +41,20 @@ describe('Server', () => {
       expect(result.length).toEqual(expectedPalette.length);
     })
   })
+  // add in test for if palette does NOT exist
+
+  describe('POST /api/v1/palettes', () => {
+    it('should return a 201 and add a new palette to the database', async () => {
+      const newPalette = { name: "Unicorn", color1: "#FFFFFF", color2: "#FFFFFF", color3: "#FFFFFF", color4: "#FFFFFF", color5: "#FFFFFF" }
+
+      const response = await request(app).post('/api/v1/palettes').send(newPalette);
+      const palettes = await database('palettes').where('id', response.body.id).select();
+      console.log(response.body.id)
+      const palette = palettes[0];
+
+      expect(response.status).toBe(201);
+      expect(palette.name).toBe(palette.name)
+    })
+  })
 
 });

@@ -64,6 +64,7 @@ app.get('/api/v1/palettes/:id', async (request, response) => {
 
 //POST
 
+
 //PATCH
 
 //DELETE
