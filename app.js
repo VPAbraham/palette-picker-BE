@@ -102,7 +102,7 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
     return response.status(422).send({error: `Palette with ${id} does not exist.`})
   }
   try {
-    const palette = await database('palettes').where({id}).update(newPatch);
+    const patchedPalette = await database('palettes').where({id}).update(newPatch);
     response.status(200).json(`Patch with id of ${id} was successful.`);
   } catch {
     response.status(500).json(error)
