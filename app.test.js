@@ -66,15 +66,16 @@ describe('Server', () => {
 
   describe('DELETE /api/v1/palettes/:id', () => {
     it('should return a 200 and remove an existing palette from the database', async () => {
-      const expectedPalettes = await database('palettes').select();
+      const currentPalettes = await database('palettes').select();
+      const expectedPalettes = currentPalettes.length - 1;
       const expectedPalette = await database('palettes').first();
       const { id } = expectedPalette;
 
-      const response = await request(app).delete(`api/v1/palettes/${id}`)
+      const response = await request(app).delete(`/api/v1/palettes/${id}`)
       const result = response.body[0]
 
       expect(response.status).toBe(200);
-      expect(expectedPalettes.length).toEqual(expectedPalettes.length - 1);
+      expect(expectedPalettes).toEqual(currentPalettes.length - 1);
     })
   })
 
