@@ -12,8 +12,8 @@ describe('Server', () => {
 
   describe('init', () => {
     it('should return a 200 status', async () => {
-      const res = await request(app).get('/')
-      expect(res.status).toBe(200)
+      const res = await request(app).get('/');
+      expect(res.status).toBe(200);
     });
   });
 
@@ -28,5 +28,18 @@ describe('Server', () => {
     expect(palettes.length).toEqual(expectedPalettes.length);
   });
 });
+
+describe('GET /api/v1/palettes/:id', () => {
+  it('should return a 200 and a single student if the student exists', async () => {
+    const expectedStudent = await database('palettes').first();
+    const { id } = expectedStudent;
+
+    const response = await request(app).get(`/api/v1/students/${id}`);
+    const result = response.body[0];
+
+    expect(response.status).toBe(200);
+    expect(result).toEqual(expectedStudent);
+  })
+})
 
 });
