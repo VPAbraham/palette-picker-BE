@@ -8,7 +8,7 @@ const database = require('knex')(configuration)
 describe('Server', () => {
   beforeEach(async () => {
     await database.seed.run();
-  })
+  });
 
   describe('init', () => {
     it('should return a 200 status', async () => {
@@ -17,16 +17,16 @@ describe('Server', () => {
     });
   });
 
-  describe('GET api/v1/palettes', () => {
-    it('should return all palettes', async () => {
-      const expectedPalettes = await database('palettes').select();
+  describe('GET /api/v1/palettes', () => {
+  it('should return a 200 and all of the students', async () => {
+    const expectedPalettes = await database('palettes').select();
 
-      const response = await request(app).get('api/v1/palettes');
-      const palettes = response.body;
+    const response = await request(app).get('/api/v1/palettes');
+    const palettes = response.body;
 
-      expect(response.status).toBe(200);
-      expect(palettes).toEqual(expectedPalettes);
-    })
-  })
+    expect(response.status).toBe(200);
+    expect(palettes.length).toEqual(expectedPalettes.length);
+  });
+});
 
 });
