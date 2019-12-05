@@ -18,7 +18,7 @@ describe('Server', () => {
   });
 
   describe('GET /api/v1/palettes', () => {
-  it('should return a 200 and all of the students', async () => {
+  it('should return a 200 and all of the palettes', async () => {
     const expectedPalettes = await database('palettes').select();
 
     const response = await request(app).get('/api/v1/palettes');
