@@ -94,6 +94,23 @@ app.post('/api/v1/palettes', async (request, response) => {
 });
 
 //PATCH
+
+app.patch('/api/v1/projects/:id', async (request, response) => {
+  const { id } = request.params;
+  const newPatch = request.body;
+  const project = await database('projects').where({id});
+
+  try {
+    if (!palette.length) {
+      return status(422).send({ error: `Palette with ${id} does not exist.` });
+    }
+    const patchedProject = await database('projects').where({id});
+    response.status(200).json(`Patch with an id of ${id} was successful.`);
+  } catch {
+    response.status(500).json(error);
+  }
+})
+
 app.patch('/api/v1/palettes/:id', async (request, response) => {
   const { id } = request.params;
   const newPatch = request.body;
@@ -105,7 +122,7 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
     const patchedPalette = await database('palettes').where({id}).update(newPatch);
     response.status(200).json(`Patch with an id of ${id} was successful.`);
   } catch {
-    response.status(500).json(error)
+    // response.status(500).json(error)
   }
 });
 
@@ -114,11 +131,11 @@ app.delete('/api/v1/projects/:id', async (request, response) => {
   const { id } = request.params;
   try {
     const project = await database('projects').where({id}).del();
-    if (project.length > 0) {
+    if (project === 0) {
       console.log(project)
-      return response.status(200).json(`Project with an id of ${id} successfully deleted.`)
+      return response.status(404).json(`Project with id of ${id} not found.`)
     }
-    response.status(404).json(`Project with id of ${id} not found.`)
+    response.status(202).json(`Project with an of ${id} successfully deleted.`)
   } catch(error) {
     response.status(500).json(error)
   }
@@ -129,9 +146,9 @@ app.delete('/api/v1/palettes/:id', async (request, response) => {
   try {
     const palette = await database('palettes').where('id', id).del();
     if (!palette.length) {
-      return response.status(200).json(`Project with id of ${id} successfully deleted.`)
+      return response.status(404).json(`Project with an id of ${id} not found.`)
     }
-    response.status(404).json(`Project with an id of ${id} not found.`)
+    response.status(202).json(`Project with id of ${id} successfully deleted.`)
   } catch(error) {
     response.status(500).json(error)
   }

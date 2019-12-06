@@ -12,6 +12,7 @@ A successful response returns an array of project objects.
 |created_at|string|Project creation date/time|
 |update_at|string|Project's last updated date/time|
 
+
 ### Response
 
 Example:
@@ -125,6 +126,7 @@ A successful response returns an array of palette objects.
 |created_at|string|Project creation date/time|
 |update_at|string|Project's last updated date/time|
 
+
 ### Response
 
 Example:
@@ -214,8 +216,6 @@ A successful response returns the id of the new palette.
 
 `POST` /api/v1/palettes
 
-GET /api/v1/palettes/:id
-
 ### Parameters
 
 | Name | Type | Description |
@@ -259,7 +259,7 @@ Example:
 
 ### Response
 
-Example:
+Example: 
 ```js
 10
 ```
@@ -298,7 +298,7 @@ Example:
 
 ### Response
 
-Example:
+Example: 
 ```js
 "Patch with an id of 5 was successful."
 ```
