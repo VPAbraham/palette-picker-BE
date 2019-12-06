@@ -121,6 +121,21 @@ describe('Server', () => {
 
   //! DELETE endpoints
 
+  describe('PATCH /api/v1/palettes/:id', () => {
+    it('should return a 200 and edit a property in a palette', async () => {
+      const expectedPalette = await database('palettes').first();
+      const { id } = expectedPalette;
+      const desiredPatch = { color1: "#000000" };
+
+      const response = await request(app).patch(`/api/v1/palettes/${id}`).send(desiredPatch);
+      const palettes = await database('palettes').where('id', id);
+      const palette = palettes[0];
+
+      expect(response.status).toBe(200);
+      expect(palette.color1).toEqual(desiredPatch.color1)
+    })
+  })
+
   describe('DELETE /api/v1/palettes/:id', () => {
     it('should return a 200 and remove an existing palette from the database', async () => {
       const currentPalettes = await database('palettes').select();
@@ -128,8 +143,8 @@ describe('Server', () => {
       const expectedPalette = await database('palettes').first();
       const { id } = expectedPalette;
 
-      const response = await request(app).delete(`/api/v1/palettes/${id}`)
-      const result = response.body[0]
+      const response = await request(app).delete(`/api/v1/palettes/${id}`);
+      const result = response.body[0];
 
       expect(response.status).toBe(200);
       expect(expectedPalettes).toEqual(currentPalettes.length - 1);
