@@ -5,5 +5,7 @@ services:
   - postgresql
 script:
   - npm test
+
+  
 before_script: 
   - psql -c 'CREATE DATABASE palettepicker_travis_test;' -U postgres
