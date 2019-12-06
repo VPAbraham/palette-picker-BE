@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon --exec babel-node server.js",
-    "test": "jest --watchAll"
+    "test": "jest --ci",
+    "test:watch": "jest --watchAll"
+
   },
   "keywords": [],
   "author": "",
