@@ -101,13 +101,13 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
   const project = await database('projects').where({id});
 
   try {
-    if (!palette.length) {
-      return status(422).send({ error: `Palette with ${id} does not exist.` });
+    if (!project.length) {
+      return response.status(422).send({ error: `Palette with ${id} does not exist.` });
     }
-    const patchedProject = await database('projects').where({id});
+    const patchedProject = await database('projects').where({id}).update(newPatch);
     response.status(200).json(`Patch with an id of ${id} was successful.`);
   } catch {
-    response.status(500).json(error);
+    response.status(500).json({error: 'Internal Server Error'});
   }
 })
 
@@ -122,7 +122,7 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
     const patchedPalette = await database('palettes').where({id}).update(newPatch);
     response.status(200).json(`Patch with an id of ${id} was successful.`);
   } catch {
-    // response.status(500).json(error)
+    response.status(500).json(error)
   }
 });
 
