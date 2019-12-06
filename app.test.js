@@ -136,4 +136,17 @@ describe('Server', () => {
     });
   });
 
+  describe('DELETE /api/v1/projects/:id', () => {
+    it('should return a 200 and remove an existing project from the database', async () => {
+      const currentProjects = await database('projects').select();
+      const expectedProjects = currentProjects.length -1;
+      const expectedProject = await database('projects').first();
+      const { id } = expectedProject;
+
+      const response = await request(app).delete(`/api/v1.projects/${id}`)
+      expect(response.status).toBe(200);
+      expect(expectedProjects).toEqual(currentPalettes.length - 1);
+    })
+  })
+
 });
