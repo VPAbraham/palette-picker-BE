@@ -25,7 +25,7 @@ describe('Server', () => {
 
       const response = await request(app).get('/api/v1/projects');
       const projects = response.body;
-      
+
       expect(response.status).toBe(200);
       expect(projects.length).toEqual(expectedProjects.length);
     });
@@ -167,4 +167,21 @@ describe('Server', () => {
     })
   })
 
+  //! QUERY endpoint
+  describe('GET /api/v1/projectsbyname/?', () => {
+    it('should return a 200 status and the projects that match the query name', async () => {
+      const keyName = 'name'
+      const valueName = 'Neature'
+      const expectedProjects = await database('projects').select();
+
+      const response = await request(app).get(`/api/v1/projectsbyname/?${keyName}=${valueName}`);
+      const queryString = response.body;
+      const findProjects = expectedProjects.filter((project) => {
+        return project.name === queryString.name
+      })
+
+      expect(response.status).toBe(200);
+      expect(findProjects.name).toEqual(queryString.name);
+    })
+  })
 });

@@ -155,4 +155,22 @@ app.delete('/api/v1/palettes/:id', async (request, response) => {
   }
 })
 
+//QUERY
+app.get('/api/v1/projectsbyname/?', async (request, response) => {
+  try {
+    const allProjects = await database('projects').select();
+    const projectName = request.query.name
+    const findProjects = allProjects.filter((project) => {
+      return project.name.toLowerCase() === projectName.toLowerCase()
+    })
+    if (findProjects.length) {
+      response.status(200).json(findProjects);
+    } else {
+      response.status(404).json(`Project with the name of ${projectName} not found.`);
+    }
+  } catch {
+    response.status(500).json({error: '500: Internal Server Error'})
+  }
+ })
+
 export default app;
