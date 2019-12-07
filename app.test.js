@@ -150,18 +150,14 @@ describe('Server', () => {
 
   describe('DELETE /api/v1/projects/:id', () => {
     it('should return a 200 and remove an existing project from the database', async () => {
-
       const currentProjects = await database('projects').select();
-      console.log(currentProjects)
       const expectedProjects = currentProjects.length -1;
       const expectedProject = await database('projects').first();
       const { id } = expectedProject;
-      console.log(id)
 
       const response = await request(app).delete(`/api/v1/projects/${id}`);
       const result = response.body[0]
-      console.log(response.status)
-      // expect(response.status).toBe(202);
+
       expect(expectedProjects).toEqual(currentProjects.length - 1);
     });
   });
