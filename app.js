@@ -94,7 +94,6 @@ app.post('/api/v1/palettes', async (request, response) => {
 });
 
 //PATCH
-
 app.patch('/api/v1/projects/:id', async (request, response) => {
   const { id } = request.params;
   const newPatch = request.body;

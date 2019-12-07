@@ -62,7 +62,6 @@ describe('Server', () => {
       expect(response.status).toBe(404);
       expect(response.body.error).toBe('404: Specified project does not exist');
     })
-
   });
 
   describe('GET /api/v1/palettes/:id', () => {
@@ -99,8 +98,8 @@ describe('Server', () => {
 
       expect(response.status).toBe(201);
       expect(project.name).toBe('Fuzzy Things')
-    })
-  })
+    });
+  });
 
   describe('POST /api/v1/palettes', () => {
     it('should return a 201 and add a new palette to the database', async () => {
@@ -117,8 +116,6 @@ describe('Server', () => {
 
   //! PUT/PATCH endpoints
 
-  //! DELETE endpoints
-
   describe('PATCH /api/v1/palettes/:id', () => {
     it('should return a 200 and edit a property in a palette', async () => {
       const expectedPalette = await database('palettes').first();
@@ -131,8 +128,10 @@ describe('Server', () => {
 
       expect(response.status).toBe(200);
       expect(palette.color1).toEqual(desiredPatch.color1)
-    })
-  })
+    });
+  });
+
+  //! DELETE endpoints
 
   describe('DELETE /api/v1/palettes/:id', () => {
     it('should return a 200 and remove an existing palette from the database', async () => {
@@ -164,10 +163,11 @@ describe('Server', () => {
       console.log(response.status)
       // expect(response.status).toBe(202);
       expect(expectedProjects).toEqual(currentProjects.length - 1);
-    })
-  })
+    });
+  });
 
   //! QUERY endpoint
+
   describe('GET /api/v1/projectsbyname/?', () => {
     it('should return a 200 status and the projects that match the query name', async () => {
       const keyName = 'name'
@@ -182,6 +182,6 @@ describe('Server', () => {
 
       expect(response.status).toBe(200);
       expect(findProjects.name).toEqual(queryString.name);
-    })
-  })
+    });
+  });
 });
