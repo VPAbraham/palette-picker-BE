@@ -111,22 +111,6 @@ A successful response returns an array of palette objects.
 
 `GET` /api/v1/palettes
 
-### Parameters
-
-| Name | Type | Description |
-|------|------|-------------|
-|id|integer| Unique project ID|
-|name|string|Project name|
-|projects_id|number|Foreign Key|
-|color1|string|Hex Value - #000000|
-|color2|string|Hex Value - #000000|
-|color3|string|Hex Value - #000000|
-|color4|string|Hex Value - #000000|
-|color5|string|Hex Value - #000000|
-|created_at|string|Project creation date/time|
-|update_at|string|Project's last updated date/time|
-
-
 ### Response
 
 Example:
@@ -178,18 +162,12 @@ A successful response returns the specified palette object, by ID.
 
 ### Parameters
 
-| Name | Type | Description |
-|------|------|-------------|
-|id|integer| Unique project ID|
-|name|string|Project name|
-|projects_id|number|Foreign Key|
-|color1|string|Hex Value - #000000|
-|color2|string|Hex Value - #000000|
-|color3|string|Hex Value - #000000|
-|color4|string|Hex Value - #000000|
-|color5|string|Hex Value - #000000|
-|created_at|string|Project creation date/time|
-|update_at|string|Project's last updated date/time|
+Need valid `id` in URL.
+
+Example
+```
+/api/v1/palettes/137
+```
 
 ### Response
 
@@ -216,24 +194,9 @@ A successful response returns the id of the new palette.
 
 `POST` /api/v1/palettes
 
-### Parameters
-
-| Name | Type | Description |
-|------|------|-------------|
-|id|integer| Unique project ID|
-|name|string|Project name|
-|projects_id|number|Foreign Key|
-|color1|string|Hex Value - #000000|
-|color2|string|Hex Value - #000000|
-|color3|string|Hex Value - #000000|
-|color4|string|Hex Value - #000000|
-|color5|string|Hex Value - #000000|
-|created_at|string|Project creation date/time|
-|update_at|string|Project's last updated date/time|
-
 ### Body
 
-Need to provide a new palette object.
+Need to provide a valid new palette object in the body.
 
 ```js
 {
@@ -259,7 +222,7 @@ Example:
 
 ### Response
 
-Example: 
+Example:
 ```js
 10
 ```
@@ -271,22 +234,16 @@ A successful response returns a message saying "Patch with an id of ${id} was su
 
 ### Parameters
 
-| Name | Type | Description |
-|------|------|-------------|
-|id|integer| Unique project ID|
-|name|string|Project name|
-|projects_id|number|Foreign Key|
-|color1|string|Hex Value - #000000|
-|color2|string|Hex Value - #000000|
-|color3|string|Hex Value - #000000|
-|color4|string|Hex Value - #000000|
-|color5|string|Hex Value - #000000|
-|created_at|string|Project creation date/time|
-|update_at|string|Project's last updated date/time|
+Need valid `id` in URL.
 
-### Body
+Example
+```
+/api/v1/palettes/137
+```
 
-Need to list and existing key and new value you wish to overwrite.
+AND
+
+Need to list and existing key and new value you wish to overwrite in the body.
 
 ```js
 { key: value }
@@ -298,7 +255,7 @@ Example:
 
 ### Response
 
-Example: 
+Example:
 ```js
 "Patch with an id of 5 was successful."
 ```
@@ -310,22 +267,46 @@ A successful response returns a message saying "Project with an id of ${id} succ
 
 ### Parameters
 
-| Name | Type | Description |
-|------|------|-------------|
-|id|integer| Unique project ID|
-|name|string|Project name|
-|projects_id|number|Foreign Key|
-|color1|string|Hex Value - #000000|
-|color2|string|Hex Value - #000000|
-|color3|string|Hex Value - #000000|
-|color4|string|Hex Value - #000000|
-|color5|string|Hex Value - #000000|
-|created_at|string|Project creation date/time|
-|update_at|string|Project's last updated date/time|
+Need valid `id` in URL.
+
+Example
+```
+/api/v1/palettes/5
+```
 
 ### Response
 
 Example:
 ```js
 "Project with an id of 5 successfully deleted."
+```
+
+## Find Projects That Match a Query String
+A successful response returns an array of the projects with names that match the query string.
+
+`GET` /api/v1/projects/?key=value
+
+### Parameters
+
+Need a valid query in the URL.
+
+```
+?name=projectNameYouAreSearchingFor
+```
+Example:
+```
+?name=neature
+```
+*Case does not effect search*
+
+### Response
+
+Example:
+```js
+{
+  "id": 25,
+  "name": "Neature",
+  "created_at": "2019-12-04T23:34:45.815Z",
+  "updated_at": "2019-12-04T23:34:45.815Z"
+}
 ```
