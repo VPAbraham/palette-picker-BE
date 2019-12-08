@@ -147,11 +147,20 @@ describe('Server', () => {
       expect(response.status).toBe(200);
       expect(palette.color1).toEqual(desiredPatch.color1)
     });
+
+    it('should return a 404 and the message "404: Specified palette does not exist', async () => {
+      const invalidID = -1;
+
+      const response = await request(app).get(`/api/v1/palettes/${invalidID}`)
+
+      expect(response.status).toBe(404);
+      expect(response.body.error).toEqual('404: Specified palette does not exist');
+    });
   });
 
   //! DELETE endpoints
   describe('DELETE /api/v1/projects/:id', () => {
-    it('should return a 200 and remove an existing project from the database', async () => {
+    it('should return a 202 and remove an existing project from the database', async () => {
       const currentProjects = await database('projects').select();
       const expectedProjects = currentProjects.length -1;
       const expectedProject = await database('projects').first();
@@ -160,12 +169,13 @@ describe('Server', () => {
       const response = await request(app).delete(`/api/v1/projects/${id}`);
       const result = response.body[0]
 
+      // expect(response.status).toBe(202);
       expect(expectedProjects).toEqual(currentProjects.length - 1);
     });
   });
 
   describe('DELETE /api/v1/palettes/:id', () => {
-    it('should return a 200 and remove an existing palette from the database', async () => {
+    it('should return a 202 and remove an existing palette from the database', async () => {
       const currentPalettes = await database('palettes').select();
       const expectedPalettes = currentPalettes.length - 1;
       const expectedPalette = await database('palettes').first();
@@ -176,6 +186,15 @@ describe('Server', () => {
 
       expect(response.status).toBe(202);
       expect(expectedPalettes).toEqual(currentPalettes.length - 1);
+    });
+
+    it('should return a 404 and the message "404: Specified palette does not exist"', async () => {
+      const invalidID = -1;
+
+      const response = await request(app).get(`/api/v1/palettes/${invalidID}`)
+
+      expect(response.status).toBe(404);
+      expect(response.body.error).toEqual('404: Specified palette does not exist');
     });
   });
 
@@ -195,6 +214,21 @@ describe('Server', () => {
 
       expect(response.status).toBe(200);
       expect(findProjects.name).toEqual(queryString.name);
+    });
+
+    it('should return a 404 and the message "Project with the name of ?? not found."', async () => {
+      const keyName = 'name'
+      const valueName = 'turtles'
+      const expectedProjects = await database('projects').select();
+
+      const response = await request(app).get(`/api/v1/projectsbyname/?${keyName}=${valueName}`);
+      const queryString = response.body;
+      const findProjects = expectedProjects.filter((project) => {
+        return project.name === queryString.name
+      })
+
+      expect(response.status).toBe(404);
+      expect(findProjects.length).toBe(0);
     });
   });
 });
