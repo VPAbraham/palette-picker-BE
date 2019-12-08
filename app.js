@@ -21,8 +21,8 @@ app.get('/api/v1/projects', async (request, response) => {
   try {
     const allProjects = await database('projects').select();
     response.status(200).json(allProjects);
-  } catch (error) {
-    response.status(500).json(error);
+  } catch(error) {
+    response.status(500).json({ error });
   }
 });
 
@@ -30,8 +30,8 @@ app.get('/api/v1/palettes', async (request, response) => {
   try {
     const allPalettes = await database('palettes').select();
     response.status(200).json(allPalettes);
-  } catch (error) {
-    response.status(500).json(error);
+  } catch(error) {
+    response.status(500).json({ error });
   }
 });
 
@@ -45,7 +45,7 @@ app.get('/api/v1/projects/:id', async (request, response) => {
     }
     response.status(404).json({ error: '404: Specified project does not exist'});
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
 });
 
@@ -58,7 +58,7 @@ app.get('/api/v1/palettes/:id', async (request, response) => {
     }
     response.status(404).json({ error: '404: Specified palette does not exist'});
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
 });
 
@@ -74,7 +74,7 @@ app.post('/api/v1/projects', async (request, response) => {
     const project = await database('projects').insert(newProject, 'id')
     response.status(201).json(project);
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
 });
 
@@ -89,7 +89,7 @@ app.post('/api/v1/palettes', async (request, response) => {
     const palette = await database('palettes').insert(newPalette, 'id')
     response.status(201).json(palette);
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
 });
 
@@ -106,7 +106,7 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
     const patchedProject = await database('projects').where({id}).update(newPatch);
     response.status(200).json(`Patch on a project with an id of ${id} was successful.`);
   } catch(error) {
-    response.status(500).json(error);
+    response.status(500).json({ error });
   }
 })
 
@@ -115,13 +115,13 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
   const newPatch = request.body;
   const palette = await database('palettes').where({id});
   if (!palette.length) {
-    return response.status(404).send(error)
+    return response.status(404).send(`Palette with id of ${id} not found.`)
   }
   try {
     const patchedPalette = await database('palettes').where({id}).update(newPatch);
     response.status(200).json(`Patch on the palette with an id of ${id} was successful.`);
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
 });
 
@@ -135,7 +135,7 @@ app.delete('/api/v1/projects/:id', async (request, response) => {
     }
     response.status(202).json(`Project with an of ${id} successfully deleted.`)
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
 })
 
@@ -148,7 +148,7 @@ app.delete('/api/v1/palettes/:id', async (request, response) => {
     }
     response.status(202).json(`Project with id of ${id} successfully deleted.`)
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
 })
 
@@ -166,7 +166,7 @@ app.get('/api/v1/projectsbyname/?', async (request, response) => {
       response.status(404).json(`Project with the name of ${projectName} not found.`);
     }
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
  })
 
