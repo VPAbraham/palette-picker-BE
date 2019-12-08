@@ -121,6 +121,15 @@ describe('Server', () => {
       expect(response.status).toBe(201);
       expect(palette.name).toBe(palette.name)
     });
+
+    it('should return a 422 and the message "Unexpected format, missing requiredParameter"', async () => {
+      const invalidPalette = {};
+
+      const response = await request(app).post('/api/v1/palettes').send(invalidPalette);
+
+      expect(response.status).toBe(422);
+      expect(response.body.error).toBe('Unexpected format, missing name');
+    });
   });
 
   //! PUT/PATCH endpoints
