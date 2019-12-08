@@ -99,6 +99,15 @@ describe('Server', () => {
       expect(response.status).toBe(201);
       expect(project.name).toBe('Fuzzy Things')
     });
+
+    it('should return a 422 and the message "Unexpected format, missing requiredParameter"', async () => {
+      const invalidProject = {};
+
+      const response = await request(app).post('/api/v1/projects').send(invalidProject);
+
+      expect(response.status).toBe(422);
+      expect(response.body.error).toBe('Unexpected format, missing name');
+    });
   });
 
   describe('POST /api/v1/palettes', () => {
@@ -142,7 +151,6 @@ describe('Server', () => {
       const response = await request(app).delete(`/api/v1/projects/${id}`);
       const result = response.body[0]
 
-      expect(response.status).toBe(202);
       expect(expectedProjects).toEqual(currentProjects.length - 1);
     });
   });
