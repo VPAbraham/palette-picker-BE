@@ -16,6 +16,7 @@ app.get('/', (request, response) => {
   response.send('Welcome to the Palette Picker 🍭')
 });
 
+
 //GET ALL
 app.get('/api/v1/projects', async (request, response) => {
   try {
