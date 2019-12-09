@@ -101,7 +101,7 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
 
   try {
     if (!project.length) {
-      return response.status(422).send({ error: `Palette with an id of ${id} does not exist.` });
+      return response.status(404).json(`Project with an id of ${id} does not exist.`);
     }
     const patchedProject = await database('projects').where({id}).update(newPatch);
     response.status(200).json(`Patch on a project with an id of ${id} was successful.`);
@@ -115,7 +115,7 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
   const newPatch = request.body;
   const palette = await database('palettes').where({id});
   if (!palette.length) {
-    return response.status(404).send(`Palette with id of ${id} not found.`)
+    return response.status(404).json(`Palette with id of ${id} not found.`)
   }
   try {
     const patchedPalette = await database('palettes').where({id}).update(newPatch);
@@ -125,16 +125,15 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
   }
 });
 
-//DELETE
 app.delete('/api/v1/projects/:id', async (request, response) => {
   const { id } = request.params;
   try {
-    const project = await database('projects').where({id}).del();
+    const project = await database('projects').where('id', id).del();
     if (project === 0) {
-      return response.status(404).json(`Project with id of ${id} not found.`)
+      return response.status(404).json(`Project with an id of ${id} not found.`)
     }
-    response.status(202).json(`Project with an of ${id} successfully deleted.`)
-  } catch(error) {
+    response.status(202).json(`Project with id of ${id} successfully deleted.`)
+  } catch (error) {
     response.status(500).json({ error })
   }
 })
@@ -144,9 +143,9 @@ app.delete('/api/v1/palettes/:id', async (request, response) => {
   try {
     const palette = await database('palettes').where('id', id).del();
     if (palette === 0) {
-      return response.status(404).json(`Project with an id of ${id} not found.`)
+      return response.status(404).json(`Palette with an id of ${id} not found.`)
     }
-    response.status(202).json(`Project with id of ${id} successfully deleted.`)
+    response.status(202).json(`Palette with id of ${id} successfully deleted.`)
   } catch(error) {
     response.status(500).json({ error })
   }

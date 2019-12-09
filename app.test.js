@@ -152,11 +152,32 @@ describe('Server', () => {
       const invalidID = -1;
 
       const response = await request(app).get(`/api/v1/palettes/${invalidID}`)
-
       expect(response.status).toBe(404);
       expect(response.body.error).toEqual('404: Specified palette does not exist');
     });
   });
+
+  describe('PATCH /api/v1/projects/:id', () => {
+    it('should return a 200 and edit a property on a project', async () => {
+      const expectedProject = await database('projects').first();
+      const { id } = expectedProject;
+      const desiredPatch = { name: "Ralphie" };
+      const response = await request(app).patch(`/api/v1/projects/${id}`).send(desiredPatch);
+      const projects = await database('projects').where('id', id);
+      const project = projects[0];
+      expect(response.status).toBe(200);
+      expect(project.name).toEqual(desiredPatch.name)
+    })
+
+    it('should return a 404 and the message "Project with an id of -1 does not exist."', async () => {
+      const invalidId = -1;
+      
+      const response = await request(app).patch(`/api/v1/projects/${invalidId}`)
+
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual('Project with an id of -1 does not exist.')
+    })
+  })
 
   //! DELETE endpoints
   describe('DELETE /api/v1/projects/:id', () => {
@@ -169,8 +190,14 @@ describe('Server', () => {
       const response = await request(app).delete(`/api/v1/projects/${id}`);
       const result = response.body[0]
 
-      // expect(response.status).toBe(202);
       expect(expectedProjects).toEqual(currentProjects.length - 1);
+    });
+
+    it('should return a 404 and the message "404: Specified project does not exist', async () => {
+      const invalidId = -1;
+      const response = await request(app).delete(`/api/v1.projects/${invalidId}`);
+      
+      expect(response.status).toBe(404);
     });
   });
 
