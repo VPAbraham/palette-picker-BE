@@ -21,7 +21,7 @@ app.get('/api/v1/projects', async (request, response) => {
   try {
     const allProjects = await database('projects').select();
     response.status(200).json(allProjects);
-  } catch (error) {
+  } catch(error) {
     response.status(500).json({ error });
   }
 });
@@ -30,7 +30,7 @@ app.get('/api/v1/palettes', async (request, response) => {
   try {
     const allPalettes = await database('palettes').select();
     response.status(200).json(allPalettes);
-  } catch (error) {
+  } catch(error) {
     response.status(500).json({ error });
   }
 });
@@ -44,8 +44,8 @@ app.get('/api/v1/projects/:id', async (request, response) => {
       return response.status(200).json(project)
     }
     response.status(404).json({ error: '404: Specified project does not exist'});
-  } catch {
-    response.status(500).json({ error: '500: Internal Server Error'})
+  } catch(error) {
+    response.status(500).json({ error })
   }
 });
 
@@ -57,8 +57,8 @@ app.get('/api/v1/palettes/:id', async (request, response) => {
       return response.status(200).json(palette)
     }
     response.status(404).json({ error: '404: Specified palette does not exist'});
-  } catch {
-    response.status(500).json({ error: '500: Internal Server Error'})
+  } catch(error) {
+    response.status(500).json({ error })
   }
 });
 
@@ -73,8 +73,8 @@ app.post('/api/v1/projects', async (request, response) => {
   try {
     const project = await database('projects').insert(newProject, 'id')
     response.status(201).json(project);
-  } catch {
-    response.status(500).json({error: '500: Internal Server Error'})
+  } catch(error) {
+    response.status(500).json({ error })
   }
 });
 
@@ -88,8 +88,8 @@ app.post('/api/v1/palettes', async (request, response) => {
   try {
     const palette = await database('palettes').insert(newPalette, 'id')
     response.status(201).json(palette);
-  } catch {
-    response.status(500).json(error)
+  } catch(error) {
+    response.status(500).json({ error })
   }
 });
 
@@ -101,12 +101,12 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
 
   try {
     if (!project.length) {
-      return response.status(422).send({ error: `Palette with ${id} does not exist.` });
+      return response.status(422).send({ error: `Palette with an id of ${id} does not exist.` });
     }
     const patchedProject = await database('projects').where({id}).update(newPatch);
-    response.status(200).json(`Patch with an id of ${id} was successful.`);
-  } catch {
-    response.status(500).json({error: 'Internal Server Error'});
+    response.status(200).json(`Patch on a project with an id of ${id} was successful.`);
+  } catch(error) {
+    response.status(500).json({ error });
   }
 })
 
@@ -115,13 +115,13 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
   const newPatch = request.body;
   const palette = await database('palettes').where({id});
   if (!palette.length) {
-    return response.status(422).send({error: `Palette with ${id} does not exist.`})
+    return response.status(404).send(`Palette with id of ${id} not found.`)
   }
   try {
     const patchedPalette = await database('palettes').where({id}).update(newPatch);
-    response.status(200).json(`Patch with an id of ${id} was successful.`);
-  } catch {
-    response.status(500).json(error)
+    response.status(200).json(`Patch on the palette with an id of ${id} was successful.`);
+  } catch(error) {
+    response.status(500).json({ error })
   }
 });
 
@@ -130,14 +130,12 @@ app.delete('/api/v1/projects/:id', async (request, response) => {
   const { id } = request.params;
   try {
     const project = await database('projects').where({id}).del();
-    console.log(project)
     if (project === 0) {
-      console.log(project)
       return response.status(404).json(`Project with id of ${id} not found.`)
     }
     response.status(202).json(`Project with an of ${id} successfully deleted.`)
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
 })
 
@@ -150,7 +148,7 @@ app.delete('/api/v1/palettes/:id', async (request, response) => {
     }
     response.status(202).json(`Project with id of ${id} successfully deleted.`)
   } catch(error) {
-    response.status(500).json(error)
+    response.status(500).json({ error })
   }
 })
 
@@ -167,8 +165,8 @@ app.get('/api/v1/projectsbyname/?', async (request, response) => {
     } else {
       response.status(404).json(`Project with the name of ${projectName} not found.`);
     }
-  } catch {
-    response.status(500).json({error: '500: Internal Server Error'})
+  } catch(error) {
+    response.status(500).json({ error })
   }
  })
 
