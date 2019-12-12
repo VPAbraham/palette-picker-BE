@@ -1,3 +1,7 @@
+# Palette Picker BE
+
+Palette Picker BE is a backend connected to our Palette Picker FE React App allows for storage color palettes and projects.
+
 ## Retrieve All Project Data
 A successful response returns an array of project objects.
 
