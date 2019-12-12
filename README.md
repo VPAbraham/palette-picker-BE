@@ -320,3 +320,19 @@ Example:
 [FE Repo](https://github.com/VPAbraham/palette-picker-FE)
 
 [Deployed FE](http://palette-pick-fe.herokuapp.com)
+
+
+### Tech
+
+- Back-End: build using Express, knex, and PostgreSQL. Each API endpoint should respond with JSON-formatted data.
+
+- Front-End: build using React utilizing SCSS.
+
+- Tested with Jest/Enzyme.
+
+
+### Team
+
+- Victor Abraham (https://github.com/VPAbraham)
+
+- Quinne Farenwald (https://github.com/qfarenwald)
