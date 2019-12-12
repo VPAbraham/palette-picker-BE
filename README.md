@@ -314,3 +314,9 @@ Example:
   "updated_at": "2019-12-04T23:34:45.815Z"
 }
 ```
+
+### FE Repo
+
+[FE Repo](https://github.com/VPAbraham/palette-picker-FE)
+
+[Deployed FE](http://palette-pick-fe.herokuapp.com)
